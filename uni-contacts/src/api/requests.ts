@@ -28,7 +28,7 @@ export const postContact = async(name: string, phone: string, email: string, add
       Authorization: 'Bearer ' + token,
     }
   });
-  // TODO: Clean up the type
+  // TODO: Clean up the type. Create one from the response.
   let body: any = {
     Info: {
       Name: name,

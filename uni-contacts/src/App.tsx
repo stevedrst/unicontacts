@@ -4,6 +4,7 @@ import { environment } from './environment/env';
 import RouteList from './Routes';
 import { BrowserRouter as Router } from "react-router-dom";
 
+// TODO: Fix renew tokens for the session. 
 const configuration = {
   authority: environment.authority,
   redirect_uri: environment.redirect_uri,
