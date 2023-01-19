@@ -7,7 +7,7 @@ interface IContactProps {
     phone: string;
     clickHandler: (e:  React.MouseEvent<HTMLButtonElement>) => void;
 }
-
+// TODO: Add CSS files.
 export const ContactDetail: React.FunctionComponent<IContactProps> = (props) => {
 
     return(

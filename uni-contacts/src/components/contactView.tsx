@@ -13,7 +13,7 @@ interface IContactViewProps {
     defaultPhoneID: number;
 }
 
-
+// TODO: Add CSS files.
 export const ContactView: React.FunctionComponent<IContactViewProps> = (props) => {
     let name: string = props.name;
     let phone: string = props.phone;

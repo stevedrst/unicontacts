@@ -9,7 +9,6 @@ let styles = require('./navbar.css');
 
 // The NavBar component returns the full navbar if a user is logged in. If not it will only return the logo in the navbar. 
 export const Navbar: React.FunctionComponent<INavbarProps> = (props) => {
-    const [currentPage, setCurrentPage] = useState<string>("");
     const { accessToken} = useOidcAccessToken();
     const { login, logout, isAuthenticated } = useOidc()
 
@@ -18,16 +17,16 @@ export const Navbar: React.FunctionComponent<INavbarProps> = (props) => {
             <nav>
                 <ul>
                     <li className="login">
-                    {!isAuthenticated && 
-                        <button onClick={() => login('/contacts')}>Login</button>}
-                    {isAuthenticated &&
+                    {!isAuthenticated ?
+                        <button onClick={() => login('/contacts')}>Login</button>
+                    :
                         <button onClick={() => logout()}>Logout</button>
                     }
                     </li>
-                    <li onClick={() => setCurrentPage("Home")}>
+                    <li>
                         <Link to="/home">Home</Link>
                     </li>
-                    <li onClick={() => setCurrentPage("Contacts")}>
+                    <li>
                         <Link to="/contacts">Contacts</Link>
                     </li>
                 </ul>

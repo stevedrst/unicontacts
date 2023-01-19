@@ -21,10 +21,10 @@ const configuration = {
 
 function App() {
   return (
-    <OidcProvider configuration={configuration} >
+    <OidcProvider configuration={configuration}>
       <div className="App">
         <Router>
-        <RouteList />
+          <RouteList />
         </Router>
       </div>
     </OidcProvider>
