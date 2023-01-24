@@ -25,7 +25,7 @@ instance.interceptors.request.use(function (config) {
 });
 
 export const getContacts = async (): Promise<IContact[]> => {
-    const result = await instance.get(`/biz/contacts?expand=Info,Info.InvoiceAddress,Info.DefaultPhone,Info.DefaultEmail,Info.DefaultAddress&hateoas=false&top=10`);
+    const result = await instance.get(`/biz/contacts?expand=Info,Info.InvoiceAddress,Info.DefaultPhone,Info.DefaultEmail,Info.DefaultAddress&hateoas=false&top=15`);
     return result.data;
 };
 export const getSingleContact = async (id: string): Promise<IContact> => {
