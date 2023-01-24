@@ -4,6 +4,8 @@ import Home from './containers/home'
 import Contacts from './containers/contacts'
 import { Navbar } from './components/navbar'
 import { useOidcAccessToken } from '@axa-fr/react-oidc'
+import Create from './containers/create'
+import View from './containers/view'
 
 const RouteList = () => {
 
@@ -18,6 +20,8 @@ const RouteList = () => {
         <Routes>
             <Route path="/Home" element={<Home />} />
             <Route path="/Contacts" element={<Contacts />} />
+            <Route path="/Create" element={<Create />} />
+            <Route path="/View" element={<View />} />
         </Routes>
       </div>
   )

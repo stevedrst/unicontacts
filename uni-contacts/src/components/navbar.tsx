@@ -16,20 +16,26 @@ export const Navbar: React.FunctionComponent<INavbarProps> = (props) => {
         <div>
             <nav>
                 <ul>
-                    <li className="login">
-                    {!isAuthenticated ?
-                        <button onClick={() => login('/contacts')}>Login</button>
-                    :
-                        <button onClick={() => logout()}>Logout</button>
-                    }
+                    <li>
+                        <Link to="/create">Create</Link>
                     </li>
                     <li>
-                        <Link to="/home">Home</Link>
+                        <Link to={`/view`}>View</Link>
                     </li>
                     <li>
                         <Link to="/contacts">Contacts</Link>
                     </li>
+                    <li>
+                        <Link to="/home">Home</Link>
+                    </li>
                 </ul>
+                <div style={{float: "right", margin:"16px"}}>
+                {!isAuthenticated ?
+                    <button onClick={() => login('/contacts')}>Login</button>
+                :
+                    <button onClick={() => logout()}>Logout</button>
+                }
+                </div>
             </nav>
         </div>
     );

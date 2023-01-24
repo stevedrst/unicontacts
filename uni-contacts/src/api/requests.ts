@@ -2,6 +2,7 @@ import { IContact, DefaultEmail, DefaultPhone } from './interfaces/contact';
 import { environment } from '../environment/env';
 import axios from 'axios';
 import { ICreateContact } from '../components/createContact';
+import { initUserManager } from 'oidc-react';
 
 const BASE_URL = environment.base_url;
 
@@ -27,29 +28,46 @@ export const getContacts = async (): Promise<IContact[]> => {
     const result = await instance.get(`/biz/contacts?expand=Info,Info.InvoiceAddress,Info.DefaultPhone,Info.DefaultEmail,Info.DefaultAddress&hateoas=false&top=10`);
     return result.data;
 };
+export const getSingleContact = async (id: string): Promise<IContact> => {
+  const result = await instance.get(`/biz/contacts/${id}?expand=Info,Info.InvoiceAddress,Info.DefaultPhone,Info.DefaultEmail,Info.DefaultAddress`);
+  return result.data;
+}
+export const getFilteredContacts = async(query: string): Promise<IContact[]> => {
+  const result = await instance.get(`/biz/contacts?expand=Info,Info.InvoiceAddress,Info.DefaultPhone,Info.DefaultEmail,Info.DefaultAddress&filter=contains(Info.Name, '${query}')&top=10`);
+  return result.data;
+};
+// orderby=Info.Name asc / orderby=Info.Name desc
+export const getSortedContactsAscended = async(): Promise<IContact[]> => {
+  const result = await instance.get(`/biz/contacts?expand=Info,Info.InvoiceAddress,Info.DefaultPhone,Info.DefaultEmail,Info.DefaultAddress&orderby=Info.Name asc&top=10`);
+  return result.data;
+}
 
-export const postContact = async(contact: ICreateContact) : Promise<IContact> => {
+export const getSortedContactsDescended = async(): Promise<IContact[]> => {
+  const result = await instance.get(`/biz/contacts?expand=Info,Info.InvoiceAddress,Info.DefaultPhone,Info.DefaultEmail,Info.DefaultAddress&orderby=Info.Name desc&top=10`);
+  return result.data;
+}
+export const postContact = async(name: string, addressLine1: string, city: string, country: string, postal: string, phone: string, email: string) : Promise<IContact> => {
 
   // TODO: Clean up the type. Create one from the response.
   let body: any = {
     Info: {
-      Name: contact.name,
+      Name: name,
       InvoiceAddress: {
-          AddressLine1: contact.addressLine1,
+          AddressLine1: addressLine1,
           AddressLine2: "1 etg.",
           AddressLine3: "",
-          City: contact.city,
-          Country: contact.country,
+          City: city,
+          Country: country,
           CountryCode: "DW",
-          PostalCode: contact.postal,
+          PostalCode: postal,
         },
       DefaultPhone: {
           CountryCode: "+999",
           Description: "Mobile",
-          Number: contact.phone,
+          Number: phone,
         },
       DefaultEmail: {
-          EmailAddress: contact.email,
+          EmailAddress: email,
         }
     },
     Comment: "Stevens new wonderful contact!"
@@ -59,7 +77,7 @@ export const postContact = async(contact: ICreateContact) : Promise<IContact> =>
   return result.data;
 }
 
-export const putContact = async(id: number, infoID: number, DefaultEmailID: number, DefaultPhoneID: number, name: string, phone: string, email: string, addressLine1: string, token: string) => {
+export const putContact = async(id: number, infoID: number, DefaultEmailID: number, DefaultPhoneID: number, name: string, phone: string, email: string, addressLine1: string) => {
   
   // TODO: Clean up the type
   let body: any = {
@@ -78,11 +96,12 @@ export const putContact = async(id: number, infoID: number, DefaultEmailID: numb
     },
     
   }
+  console.log(body);
   const result = await instance.put(`/biz/contacts/${id}`, body)
   return result.data;
 }
 
-export const deleteContact = async (id: number, token: string): Promise<any> => {
+export const deleteContact = async (id: number): Promise<any> => {
   
     const result = await instance.delete(`/biz/contacts/${id}`);
     return result.data;

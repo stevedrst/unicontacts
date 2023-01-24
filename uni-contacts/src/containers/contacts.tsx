@@ -1,16 +1,23 @@
-import React, {useState, useEffect, useMemo} from 'react';
+import React, {useState, useEffect, useMemo, MouseEventHandler} from 'react';
 import { OidcSecure, useOidcAccessToken, useOidc } from '@axa-fr/react-oidc';
-import { getContacts } from '../api/requests'
+import { getContacts, getFilteredContacts, getSortedContactsAscended, getSortedContactsDescended } from '../api/requests'
 import { IContact } from '../api/interfaces/contact';
-import { ContactDetail } from '../components/contactDetail';
+import { ContactGrid } from '../components/contactGrid';
 import { CreateContact, ICreateContact } from '../components/createContact';
 import { ContactView } from '../components/contactView';
 import { safe } from '../utils/safe';
+import { useNavigate } from "react-router-dom";
+import ArrowUp from './../icons/ArrowUp.png';
+import ArrowDown from './../icons/ArrowDown.png';
+
+let styles = require('./contacts.css');
 
 export const Contacts: React.FunctionComponent = (props) => {
     const [data, setData] = useState<IContact[]>([]);
     const [filter, setFilter] = useState('');
     const [activeItem, setActiveItem] = useState<IContact>();
+    const navigate = useNavigate();
+    const [sort, setSort] = useState("");
 
     useEffect(() => {
         fetchContacts();
@@ -27,73 +34,106 @@ export const Contacts: React.FunctionComponent = (props) => {
 
     const selectActiveItem = (e: React.MouseEvent, id: number) => {
         let item = data.find(c => c.ID === id)
-        setActiveItem(item);
+        navigate("/View?id=" + id);
      };
 
     const handleChange = (e: { target: { value: string; }; }) => {
-        setFilter(e.target.value);
+        fetchFilteredContacts(e.target.value);
+        // setFilter(e.target.value);
     };
 
+    const toggleSort = () => {
+        switch(sort) {
+            case '': 
+                setSort("down");
+                fetchSortedContactsAscended();
+                break;
+            case 'down':
+                setSort("up");
+                fetchSortedContactsDescended();
+                break;
+            case 'up': 
+                setSort("down")
+                fetchSortedContactsAscended();
+                break;
+            default: 
+                setSort("");
+                break;
+        }
+    }
+    const fetchSortedContactsDescended = async(): Promise<void> => {
+        const { result, error } = await safe<IContact[]>(getSortedContactsDescended());
+
+        if (!result || error) return;
+
+        setData([...result]);
+    }
+    const fetchSortedContactsAscended = async(): Promise<void> => {
+        const { result, error } = await safe<IContact[]>(getSortedContactsAscended());
+
+        if (!result || error) return;
+
+        setData([...result]);
+    }
+    const fetchFilteredContacts = async (query: string): Promise<void> => {
+        const { result, error } = await safe<IContact[]>(getFilteredContacts(query));
+
+        if (!result || error) return;
+
+        setData([...result]);
+    }
     const contacts = useMemo(() => {
         return data.map((num, index) => {
 
-            if (filter == "" || num.Info.Name.toLowerCase().includes(filter.toLowerCase())) {
                 return(
-                    <ContactDetail
+                    <ContactGrid
                         key={index}
                         id={num.ID}
                         name={num.Info.Name}
                         phone={num.Info.DefaultPhone.Number}
                         email={num.Info.DefaultEmail.EmailAddress}
+                        addressLine1={(num.Info.InvoiceAddress === null || num.Info.InvoiceAddress === undefined) ? "Unspecified" : num.Info.InvoiceAddress.AddressLine1  }
+                        city={(num.Info.InvoiceAddress === null || num.Info.InvoiceAddress === undefined) ? "Unspecified" : num.Info.InvoiceAddress.City}
+                        country={(num.Info.InvoiceAddress === null || num.Info.InvoiceAddress === undefined) ? "Unspecified" : num.Info.InvoiceAddress.Country}
+                        postal={(num.Info.InvoiceAddress === null || num.Info.InvoiceAddress === undefined) ? "Unspecified" : num.Info.InvoiceAddress.PostalCode}
                         clickHandler={(e) => selectActiveItem(e, num.ID)} 
                     />
                 )
-            }
         })
-    }, [filter, data]);
+    }, [data]);
     
     return (
         <OidcSecure>
             <div style={{padding: "10px"}}>
             <h1>Contacts</h1>
-                <div className="columns" style={{display:"flex", flexDirection:"row"}}>
-                    <div className="column">
-                        <div className="row">
-                            <input id="filter"
-                              name="filter"
-                              type="text"
-                              value={filter}
+                        <div>
+                            <input
                               onChange={handleChange}
                             />
-                            <div className="columns">
-                                {contacts}
+                            <br></br>
+                            <br></br>
+                            <div className="table-wrapper">
+                                <table className="fl-table">
+                                    <thead>
+                                    <tr>
+                                        {(sort === "up") && <th onClick={(e) => {toggleSort()}}>Name<img style={{float: 'right'}} src={ArrowDown} alt="" height='8' width='8'></img></th>}
+                                        {(sort === "down") && <th onClick={(e) => {toggleSort()}}>Name<img  style={{float: 'right'}} src={ArrowUp} alt="" height='8' width='8'></img></th>}
+                                        {(sort === "") && <th onClick={(e) => {toggleSort()}}>Name<img  style={{float: 'right'}} src={ArrowDown} alt="" height='8' width='8'></img></th>}
+                                        <th>Email</th>
+                                        <th>Phone</th>
+                                        <th>Street</th>
+                                        <th>City</th>
+                                        <th>Postal</th>
+                                        <th>Country</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                        {contacts}
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
-                    <div className="column">
-                        <div className="row">
-                            <CreateContact contactCreated={(contact: ICreateContact) => console.log(contact)} />
-                        </div>
-                    </div>
-                    <div className="column">
-                        <div className="row">
-                            {activeItem != null && 
-                                <ContactView
-                                    key={activeItem.ID}
-                                    id={activeItem.ID}
-                                    name={activeItem.Info.Name}
-                                    email={activeItem.Info.DefaultEmail.EmailAddress}
-                                    phone={activeItem.Info.DefaultPhone.Number}
-                                    addressline1={activeItem.Info.InvoiceAddress.AddressLine1}
-                                    infoID ={activeItem.InfoID}
-                                    defaultPhoneID={activeItem.Info.DefaultPhoneID}
-                                    defaultEmailID={activeItem.Info.DefaultEmailID}
-                                />
-                            }
-                    </div> 
-                </div>
-            </div>
-            </div>      
         </OidcSecure>
     )
 }
