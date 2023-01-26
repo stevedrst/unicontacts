@@ -58,31 +58,29 @@ export const CreateContact: React.FunctionComponent<ICreateContactProps> = (prop
 
     return(
         <div>
-            <div style={{margin:"32px"}}>
-                <h1>Create contact</h1>
                 <form id="create-form" className="field" onSubmit={handleSubmit}>
-            <div className="columns" style={{margin:"8px", display:"flex"}} >
+            <div className="columns" style={{margin:"8px", display:"flex", fontSize:"110%"}} >
                 <div className="column" style={{marginRight:"8px", float:"left"}}>
                     <div className="row">
                         Name
                     </div>
                     <div className="row">
-                        <input style={{width:"240px"}}  className="input" type="title" placeholder="Name" onChange={ (e) => name = e.target.value} />
+                        <input style={{width:"240px", fontSize:"110%"}} className="input" type="title" placeholder="Name" onChange={ (e) => name = e.target.value} />
                     </div>
                     <div className="row">
                         Email
                     </div>
                     <div className="row">
-                        <input style={{width:"240px"}}  className="input" type="title" placeholder="Email" onChange={ (e) => email = e.target.value} />
+                        <input style={{width:"240px", fontSize:"110%"}} className="input" type="title" placeholder="Email" onChange={ (e) => email = e.target.value} />
                     </div>
                     <div className="row">
                         Phone
                     </div>
                     <div className="row">
-                        <input style={{width:"240px"}}  className="input" type="title" placeholder="Phone" onChange={ (e) => phone = e.target.value} />
+                        <input style={{width:"240px", fontSize:"110%"}} className="input" type="title" placeholder="Phone" onChange={ (e) => phone = e.target.value} />
                     </div>
                     <div className="row" style={{marginTop: "40px", }}>
-                    <button className="button is-success" style={{background:"#339DFF", borderRadius:"50px", width:"80px", color:"#fff"}}>
+                    <button className="button is-success" style={{background:"#339DFF", borderRadius:"50px", width:"80px", color:"#fff", padding:"12px"}}>
                             Create
                     </button>
                     </div>
@@ -92,30 +90,29 @@ export const CreateContact: React.FunctionComponent<ICreateContactProps> = (prop
                             Addressline 1
                         </div>
                         <div className="row">
-                        <input style={{width:"240px"}}  className="input" type="title" placeholder="Addressline 1" onChange={ (e) => addressLine1 = e.target.value} />
+                        <input style={{width:"240px", fontSize:"110%"}}  className="input" type="title" placeholder="Addressline 1" onChange={ (e) => addressLine1 = e.target.value} />
                         </div>
                         <div className="row">
                             City
                         </div>
                         <div className="row">
-                        <input style={{width:"240px"}}  className="input" type="title" placeholder="City" onChange={ (e) => city = e.target.value} />
+                        <input style={{width:"240px", fontSize:"110%"}}  className="input" type="title" placeholder="City" onChange={ (e) => city = e.target.value} />
                         </div>
                         <div className="row">
                             Postal
                         </div>
                         <div className="row">
-                            <input style={{width:"240px"}}  className="input" type="title" placeholder="Postal" onChange={ (e) => postal = e.target.value} />
+                            <input style={{width:"240px", fontSize:"110%"}}  className="input" type="title" placeholder="Postal" onChange={ (e) => postal = e.target.value} />
                         </div>
                         <div className="row">
                             Country
                         </div>
                         <div className="row">
-                            <input style={{width:"240px"}}  className="input" type="title" placeholder="Country" onChange={ (e) => country = e.target.value} />
+                            <input style={{width:"240px", fontSize:"110%"}}  className="input" type="title" placeholder="Country" onChange={ (e) => country = e.target.value} />
                         </div>
                     </div>
                 </div>
             </form>
             </div>
-        </div>
     )
 }

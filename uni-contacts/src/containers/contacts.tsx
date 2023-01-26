@@ -82,6 +82,10 @@ export const Contacts: React.FunctionComponent = (props) => {
 
         setData([...result]);
     }
+    const toCreate = () =>{ 
+        let path = `/Create`; 
+        navigate(path);
+      }
     const contacts = useMemo(() => {
         return data.map((num, index) => {
 
@@ -107,30 +111,34 @@ export const Contacts: React.FunctionComponent = (props) => {
             <div style={{padding: "10px"}}>
             <h1>Contacts</h1>
                         <div>
-                            <input
-                              onChange={handleChange}
-                            />
+                            <div style={{width:"100rem"}}>
+                                <input placeholder="Search" style={{width: "14rem", height:"2rem"}}
+                                  onChange={handleChange}
+                                />
+                                <button style={{float: "right", background:"#324960", color:"#ffffff", padding:"12px", cursor:"pointer"}} onClick={toCreate}>Add new contact</button>
+                                </div>
                             <br></br>
                             <br></br>
+                            
                             <div className="table-wrapper">
-                                <table className="fl-table">
-                                    <thead>
-                                    <tr>
-                                        {(sort === "up") && <th onClick={(e) => {toggleSort()}}>Name<img style={{float: 'right'}} src={ArrowDown} alt="" height='8' width='8'></img></th>}
-                                        {(sort === "down") && <th onClick={(e) => {toggleSort()}}>Name<img  style={{float: 'right'}} src={ArrowUp} alt="" height='8' width='8'></img></th>}
-                                        {(sort === "") && <th onClick={(e) => {toggleSort()}}>Name<img  style={{float: 'right'}} src={ArrowDown} alt="" height='8' width='8'></img></th>}
-                                        <th>Email</th>
-                                        <th>Phone</th>
-                                        <th>Street</th>
-                                        <th>City</th>
-                                        <th>Postal</th>
-                                        <th>Country</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                        {contacts}
-                                    </tbody>
-                                </table>
+                            <table className="fl-table">
+                                <thead>
+                                <tr>
+                                    {(sort === "up") && <th onClick={(e) => {toggleSort()}}>Name<img style={{float: 'right'}} src={ArrowDown} alt="" height='8' width='8'></img></th>}
+                                    {(sort === "down") && <th onClick={(e) => {toggleSort()}}>Name<img  style={{float: 'right'}} src={ArrowUp} alt="" height='8' width='8'></img></th>}
+                                    {(sort === "") && <th onClick={(e) => {toggleSort()}}>Name<img  style={{float: 'right'}} src={ArrowDown} alt="" height='8' width='8'></img></th>}
+                                    <th>Email</th>
+                                    <th>Phone</th>
+                                    <th>Street</th>
+                                    <th>City</th>
+                                    <th>Postal</th>
+                                    <th>Country</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                    {contacts}
+                                </tbody>
+                            </table>
                             </div>
                         </div>
                     </div>

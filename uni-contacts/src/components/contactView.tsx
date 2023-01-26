@@ -69,35 +69,35 @@ export const ContactView: React.FunctionComponent<IContactViewProps> = (props) =
     return(
         <div>
         <form>
-            <div className="columns" style={{fontSize:"60%", margin:"8px", display:"flex"}} >
+        <div className="columns" style={{margin:"8px", display:"flex", fontSize:"110%"}} >
                 <div className="column" style={{marginRight:"8px", float:"left"}}>
                     <div className="row">
                         Name
                     </div>
                     <div className="row">
-                        <input style={{width:"240px"}}  className="input" type="title" placeholder={props.name} onChange={ (e) => setCname(e.target.value)} />
+                        <input style={{width:"240px", fontSize:"110%"}}  className="input" type="title" defaultValue={props.name} onChange={ (e) => setCname(e.target.value)} />
                     </div>
                     <div className="row">
                         Email
                     </div>
                     <div className="row">
-                        <input style={{width:"240px"}}  className="input" type="title" placeholder={props.email} onChange={ (e) => setCemail(e.target.value)} />
+                        <input style={{width:"240px", fontSize:"110%"}}  className="input" type="title" defaultValue={props.email} onChange={ (e) => setCemail(e.target.value)} />
                     </div>
                     <div className="row">
                         Phone
                     </div>
                     <div className="row">
-                        <input style={{width:"240px"}}  className="input" type="title" placeholder={props.phone} onChange={ (e) => setCphone(e.target.value)} />
+                        <input style={{width:"240px", fontSize:"110%"}}  className="input" type="title" defaultValue={props.phone} onChange={ (e) => setCphone(e.target.value)} />
                     </div>
-                    <div className="row" style={{marginTop: "40px"}}>
+                    <div className="row" style={{marginTop: "60px"}}>
                         <div className="field">
                         <p className="control">
-                            <button onClick={handleEdit} style={{float: "left", background:"#339DFF", borderRadius:"50px", width:"80px", color:"#fff"}}>
-                                Edit
+                            <button onClick={handleEdit} style={{float: "left", background:"#339DFF", borderRadius:"50px", width:"80px", color:"#fff", padding:"12px"}}>
+                                Save
                             </button>
                         </p>
                         <p className="control">
-                            <button onClick={handleDelete} style={{float: 'right', background:"#f44336", borderRadius:"50px", width:"80px", color:"#fff"}}>Delete</button>
+                            <button onClick={handleDelete} style={{float: 'right', background:"#f44336", borderRadius:"50px", width:"80px", color:"#fff", padding:"12px"}}>Delete</button>
                         </p>
                         </div>
                     </div>
@@ -107,25 +107,25 @@ export const ContactView: React.FunctionComponent<IContactViewProps> = (props) =
                             Addressline 1
                         </div>
                         <div className="row">
-                        <input style={{width:"240px"}}  className="input" type="title" placeholder={props.addressline1} onChange={ (e) => setCAddressLine1(e.target.value)} />
+                        <input style={{width:"240px", fontSize:"110%"}}  className="input" type="title" defaultValue={props.addressline1} onChange={ (e) => setCAddressLine1(e.target.value)} />
                         </div>
                         <div className="row">
                             City
                         </div>
                         <div className="row">
-                        <input style={{width:"240px"}}  className="input" type="title" placeholder={props.city} onChange={ (e) => ccity = e.target.value} />
+                        <input style={{width:"240px", fontSize:"110%"}}  className="input" type="title" defaultValue={props.city} onChange={ (e) => ccity = e.target.value} />
                         </div>
                         <div className="row">
                             Postal
                         </div>
                         <div className="row">
-                            <input style={{width:"240px"}}  className="input" type="title" placeholder={props.postal} onChange={ (e) => cpostal = e.target.value} />
+                            <input style={{width:"240px", fontSize:"110%"}}  className="input" type="title" defaultValue={props.postal} onChange={ (e) => cpostal = e.target.value} />
                         </div>
                         <div className="row">
                             Country
                         </div>
                         <div className="row">
-                            <input style={{width:"240px"}}  className="input" type="title" placeholder={props.country} onChange={ (e) => ccountry = e.target.value} />
+                            <input style={{width:"240px", fontSize:"110%"}}  className="input" type="title" defaultValue={props.country} onChange={ (e) => ccountry = e.target.value} />
                         </div>
                     </div>
                 </div>

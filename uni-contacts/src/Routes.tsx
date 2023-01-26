@@ -18,7 +18,7 @@ const RouteList = () => {
         <Navbar/>
         
         <Routes>
-            <Route path="/Home" element={<Home />} />
+            <Route path="/" element={<Home />} />
             <Route path="/Contacts" element={<Contacts />} />
             <Route path="/Create" element={<Create />} />
             <Route path="/View" element={<View />} />

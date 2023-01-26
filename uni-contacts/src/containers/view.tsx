@@ -48,23 +48,9 @@ export const View: React.FunctionComponent<IDetailViewProps>= (props) => {
             <div className="columns" style={{margin:"8px", display: 'flex'}}>
                 <div className="column" style={{width: "10rem"}}></div>
                 <div className="column" style={{float: "left", margin:"8px"}}>
-                <h1>Contact detail</h1>
-                    <div className="row"></div>
-                        <p>Search contact by ID</p>
-                        <form id="search-form" className="field" onSubmit={handleSubmit}>
-                    <p className="control has-icons-left has-icons-right">
-                      <input  className="input" type="id" placeholder="id" onChange={ (e) => id = e.target.value} />
-                    </p>
-                    <div className="field">
-                        <p className="control">
-                            <button className="button is-success" style={{borderRadius:"50px"}}>
-                                Search
-                            </button>
-                        </p>
-                    </div>
-                  </form>
                 </div>
-                <div className="column" style={{marginTop:"90px"}}>
+                <div className="column" style={{marginTop:"20px", float:"left"}}>
+                <h1>Contact detail</h1>
                         <div>
                         {!activeContact ? <div></div> :
                         <div>
